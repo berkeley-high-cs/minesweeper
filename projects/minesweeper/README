@@ -24,10 +24,12 @@ End when open squares = total squares - minecount.
 
 - ~~Update README~~
 
-- Make Minesweeper.java from Demo.java
+- ~~Make Minesweeper.java from Demo.java~~
 
-- Draw basic all closed grid
-
-- Debug mode to see where bombs are
+- ~~Draw basic all closed grid~~
 
 - Random bomb placement
+
+- Count bombs
+
+- Debug mode to see where bombs are
