@@ -1,0 +1,34 @@
+# Grid Game
+
+This is some starter code for writing grid-based games like Tic Tac Toe,
+Concentration, Boggle, Minesweeper, etc.
+
+There are three classes here:
+
+  - GUI - a simple GUI that creates a fixed-size window and adds one component to it.
+
+  - GridGame - a class that takes care of managing the grid UI for you. You can
+    look at this code but it shouldn’t be necessary for you to do so.
+
+  - Demo - A simple class that shows how to use GridGame. This class makes a bit
+    of use of inheritance, a topic that we won’t officially cover until Unit 9
+    but which makes this code a lot easier to write.
+
+Baically inheritance lets you write a class that “inherits” methods from another
+class so you can use them as if they were defined in your own class. It also
+allows, as in this case, for you to provide methods that the class you inherit
+from (called the super class) can call from its code, allowing you to customize
+the behavior in a controlled way.
+
+The key bits in Demo that you need to inherit from Gridgame are the `extends
+GridGame` in the first line of the class declaration and the call to
+`super(rows, columns, 10)` in the constructor.
+
+In this code, inheriting from GridGame makes it so a class like Demo only needs
+to worry about one cell at a time. GridGame will call the method paintCell
+passing the row and column coordinates of the cell when it needs to draw a cell
+and will call the method cellClicked, again passing the row and column
+coordinates, when the user clicks a cell.
+
+Finally GridGame provides a method `after` that you can call in order to cause
+something to happen after a certain number of milliseconds.
