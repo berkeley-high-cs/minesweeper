@@ -17,15 +17,12 @@ public class Minesweeper extends GridGame {
 
   public void paintCell(int row, int column, Graphics2D g) {
     if (lost) {
-      g.setColor(Color.RED);
-      g.fillRect(0, 0, cellWidth(), cellHeight());
+      fillCell(g, Color.RED);
     } else {
       if (isBomb(row, column)) {
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, cellWidth(), cellHeight());
+        fillCell(g, Color.BLACK);
       } else {
-        g.setColor(Color.GRAY);
-        g.fillRect(0, 0, cellWidth(), cellHeight());
+        fillCell(g, Color.GRAY);
         if (!bombs[row][column]) {
           g.setColor(Color.BLUE);
           g.setFont(g.getFont().deriveFont((float)(cellHeight() * 3 / 4)));
@@ -44,6 +41,11 @@ public class Minesweeper extends GridGame {
 
   //////////////////////////////////////////////////////////////////////////////
   // Private helpers
+
+  private void fillCell(Graphics2D g, Color color) {
+    g.setColor(color);
+    g.fillRect(0, 0, cellWidth(), cellHeight());
+  }
 
   private void placeBombs(int number) {
     for (int i = 0; i < number; i++) {
