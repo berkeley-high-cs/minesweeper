@@ -1,11 +1,11 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class Demo extends GridGame {
+public class Minesweeper extends GridGame {
 
   private Color[][] grid;
 
-  public Demo(int rows, int columns) {
+  public Minesweeper(int rows, int columns) {
     super(rows, columns, 10);
     grid = new Color[rows][columns];
     randomizeColors();

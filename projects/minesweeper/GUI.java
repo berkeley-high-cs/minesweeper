@@ -26,7 +26,7 @@ public class GUI {
     // frame.pack()
 
     // Add an instance of your actual game class here.
-    frame.add(new Demo(6, 6));
+    frame.add(new Minesweeper(6, 6));
 
     // Make the frame actually appear.
     frame.setVisible(true);
