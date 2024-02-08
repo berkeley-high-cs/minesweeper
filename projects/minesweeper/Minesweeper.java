@@ -5,6 +5,7 @@ public class Minesweeper extends GridGame {
 
   private boolean[][] bombs;
   private int[][] counts;
+  private boolean lost = false;
 
   public Minesweeper(int rows, int columns, int numberOfBombs) {
     super(rows, columns, 10);
@@ -15,20 +16,29 @@ public class Minesweeper extends GridGame {
   }
 
   public void paintCell(int row, int column, Graphics2D g) {
-    if (bombs[row][column]) {
-      g.setColor(Color.BLACK);
+    if (lost) {
+      g.setColor(Color.RED);
+      g.fillRect(0, 0, cellWidth(), cellHeight());
     } else {
-      g.setColor(Color.GRAY);
-    }
-    g.fillRect(0, 0, cellWidth(), cellHeight());
-    if (!bombs[row][column]) {
-      g.setColor(Color.BLUE);
-      g.setFont(g.getFont().deriveFont((float)(cellHeight() * 3 / 4)));
-      g.drawString("" + counts[row][column], cellWidth() / 3, cellHeight() * 3 / 4);
+      if (isBomb(row, column)) {
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, cellWidth(), cellHeight());
+      } else {
+        g.setColor(Color.GRAY);
+        g.fillRect(0, 0, cellWidth(), cellHeight());
+        if (!bombs[row][column]) {
+          g.setColor(Color.BLUE);
+          g.setFont(g.getFont().deriveFont((float)(cellHeight() * 3 / 4)));
+          g.drawString("" + counts[row][column], cellWidth() / 3, cellHeight() * 3 / 4);
+        }
+      }
     }
   }
 
   public void cellClicked(int row, int col) {
+    if (isBomb(row, col)) {
+      lost = true;
+    }
     repaint();
   }
 
