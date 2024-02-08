@@ -28,8 +28,18 @@ End when open squares = total squares - minecount.
 
 - ~~Draw basic all closed grid~~
 
-- Random bomb placement
+- ~~Random bomb placement~~
 
-- Count bombs
+- ~~Count bombs~~
 
-- Debug mode to see where bombs are
+- ~~Debug mode to see where bombs are~~
+
+- ~~Fill from click~~
+
+- Add flags (red square)
+
+- Make first click always safe
+
+- Add minecount label
+
+- Adjust component size from grid size so cells are always square.
