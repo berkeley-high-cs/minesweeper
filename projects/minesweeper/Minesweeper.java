@@ -6,11 +6,11 @@ public class Minesweeper extends GridGame {
   private boolean[][] bombs;
   private int[][] counts;
 
-  public Minesweeper(int rows, int columns) {
+  public Minesweeper(int rows, int columns, int numberOfBombs) {
     super(rows, columns, 10);
     bombs = new boolean[rows][columns];
     counts = new int[rows][columns];
-    placeBombs((int)(rows * columns * 0.2));
+    placeBombs(numberOfBombs);
     countAllNeighbors();
   }
 
