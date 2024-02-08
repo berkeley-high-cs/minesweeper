@@ -5,19 +5,27 @@ public class Minesweeper extends GridGame {
 
   private static final boolean debugBombs = false;
 
+  private int numberOfBombs;
   private boolean[][] bombs;
   private boolean [][] revealed;
   private boolean [][] flags;
   private int[][] counts;
   private boolean lost = false;
 
+  private boolean firstClick = true;
+
   public Minesweeper(int rows, int columns, int numberOfBombs) {
     super(rows, columns, 10);
+    this.numberOfBombs = numberOfBombs;
     bombs = new boolean[rows][columns];
     revealed = new boolean[rows][columns];
     flags = new boolean[rows][columns];
     counts = new int[rows][columns];
-    placeBombs(numberOfBombs);
+  }
+
+  // Set up the bombs but make sure there isn't one at r,c
+  private void setupBombs(int r, int c) {
+    placeBombs(r, c);
     countAllNeighbors();
   }
 
@@ -45,6 +53,10 @@ public class Minesweeper extends GridGame {
   }
 
   public void cellClicked(int row, int col, boolean rightClicked) {
+    if (firstClick) {
+      setupBombs(row, col);
+      firstClick = false;
+    }
     if (rightClicked) {
       flags[row][col] = !flags[row][col];
     } else {
@@ -84,21 +96,23 @@ public class Minesweeper extends GridGame {
     g.fillRect(0, 0, cellWidth(), cellHeight());
   }
 
-  private void placeBombs(int number) {
-    for (int i = 0; i < number; i++) {
-      placeBomb();
+  private void placeBombs(int r, int c) {
+    for (int i = 0; i < numberOfBombs; i++) {
+      placeBomb(r, c);
     }
   }
 
-  private void placeBomb() {
+  private void placeBomb(int noR, int noC) {
     int d = 1;
     int row = 0;
     int col = 0;
     for (int r = 0; r < getRows(); r++) {
       for (int c = 0; c < getColumns(); c++) {
-        if (Math.random() < 1.0 / d++) {
-          row = r;
-          col = c;
+        if (r != noR || c != noC) {
+          if (Math.random() < 1.0 / d++) {
+            row = r;
+            col = c;
+          }
         }
       }
     }
