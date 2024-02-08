@@ -7,6 +7,7 @@ public class Minesweeper extends GridGame {
 
   private boolean[][] bombs;
   private boolean [][] revealed;
+  private boolean [][] flags;
   private int[][] counts;
   private boolean lost = false;
 
@@ -14,6 +15,7 @@ public class Minesweeper extends GridGame {
     super(rows, columns, 10);
     bombs = new boolean[rows][columns];
     revealed = new boolean[rows][columns];
+    flags = new boolean[rows][columns];
     counts = new int[rows][columns];
     placeBombs(numberOfBombs);
     countAllNeighbors();
@@ -23,7 +25,9 @@ public class Minesweeper extends GridGame {
     if (lost) {
       fillCell(g, Color.RED);
     } else {
-      if (debugBombs && isBomb(row, column)) {
+      if (flags[row][column]) {
+        fillCell(g, Color.RED);
+      } else if (debugBombs && isBomb(row, column)) {
         fillCell(g, Color.BLACK);
       } else {
         if (revealed[row][column]) {
@@ -40,11 +44,15 @@ public class Minesweeper extends GridGame {
     }
   }
 
-  public void cellClicked(int row, int col) {
-    if (isBomb(row, col)) {
-      lost = true;
+  public void cellClicked(int row, int col, boolean rightClicked) {
+    if (rightClicked) {
+      flags[row][col] = !flags[row][col];
     } else {
-      revealFrom(row, col, true, new boolean[getRows()][getColumns()]);
+      if (isBomb(row, col)) {
+        lost = true;
+      } else {
+        revealFrom(row, col, true, new boolean[getRows()][getColumns()]);
+      }
     }
     repaint();
   }

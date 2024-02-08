@@ -70,7 +70,7 @@ public abstract class GridGame extends JPanel {
    * @param row, the row of the cell that was clicked.
    * @param col, the column of the cell that was clicked.
    */
-  public abstract void cellClicked(int row, int col);
+  public abstract void cellClicked(int row, int col, boolean rightClick);
 
 
   //////////////////////////////////////////////////////////////////////////////
@@ -175,7 +175,7 @@ public abstract class GridGame extends JPanel {
     // Call the method with the row and column we figured out so our subclass
     // can do something. This is an abstraction so classes that extend GridGame
     // don't have to do the semi-complicated math above.
-    cellClicked(row, col);
+    cellClicked(row, col, evt.getButton() != MouseEvent.BUTTON1);
   }
 
   private void paintOneCell(int row, int column, Graphics2D g) {
