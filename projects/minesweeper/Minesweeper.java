@@ -3,7 +3,7 @@ import java.awt.Graphics2D;
 
 public class Minesweeper extends GridGame {
 
-  private static final boolean debugBombs = true;
+  private static final boolean debugBombs = false;
 
   private boolean[][] bombs;
   private boolean [][] revealed;
@@ -28,7 +28,7 @@ public class Minesweeper extends GridGame {
       } else {
         if (revealed[row][column]) {
           fillCell(g, new Color(192, 192, 192));
-          if (!bombs[row][column]) {
+          if (!bombs[row][column] && counts[row][column] > 0) {
             g.setColor(Color.BLUE);
             g.setFont(g.getFont().deriveFont((float)(cellHeight() * 3 / 4)));
             g.drawString("" + counts[row][column], cellWidth() / 3, cellHeight() * 3 / 4);
@@ -44,13 +44,32 @@ public class Minesweeper extends GridGame {
     if (isBomb(row, col)) {
       lost = true;
     } else {
-      revealed[row][col] = true;
+      revealFrom(row, col, true, new boolean[getRows()][getColumns()]);
     }
     repaint();
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // Private helpers
+
+  private void revealFrom(int r, int c, boolean firstCell, boolean[][] seen) {
+    if (!seen[r][c]) {
+      seen[r][c] = true;
+
+      if (!isBomb(r, c)) {
+        revealed[r][c] = true;
+        if (firstCell || counts[r][c] == 0) {
+          for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+              if (inBounds(r + i, c + j)) {
+                revealFrom(r + i, c + j, false, seen);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 
   private void fillCell(Graphics2D g, Color color) {
     g.setColor(color);
