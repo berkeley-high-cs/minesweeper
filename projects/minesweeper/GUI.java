@@ -8,11 +8,8 @@ public class GUI {
 
     JFrame frame = new JFrame(TITLE);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-    frame.setSize(1000, 1000);
-
-    frame.add(new Minesweeper(16, 16, 40));
-
+    frame.add(new Minesweeper(16, 30, 99));
+    frame.pack();
     frame.setVisible(true);
     frame.setLocationRelativeTo(null);
   }

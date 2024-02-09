@@ -1,3 +1,4 @@
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
@@ -17,6 +18,7 @@ public abstract class GridGame extends JPanel {
 
   private final int rows;
   private final int columns;
+  private final int cellSize;
   private final int padding;
 
   /**
@@ -25,9 +27,10 @@ public abstract class GridGame extends JPanel {
    * @param columns, the number of columns in the grid.
    * @param padding, the padding, in pixels, between cells.
    */
-  public GridGame(int rows, int columns, int padding) {
+  public GridGame(int rows, int columns, int cellSize, int padding) {
     this.rows = rows;
     this.columns = columns;
+    this.cellSize = cellSize;
     this.padding = padding;
 
     // This sets things up so when the user clicks the mouse in this component
@@ -44,15 +47,9 @@ public abstract class GridGame extends JPanel {
     );
   }
 
-  /**
-   * Construct a GridGame with the given dimensions and a padding of 0.
-   * @param rows, the number of rows in the grid.
-   * @param columns, the number of columns in the grid.
-   */
-  public GridGame(int rows, int cols) {
-    this(rows, cols, 0);
+  public Dimension getPreferredSize() {
+    return new Dimension(columns * (cellSize + padding) + padding, rows * (cellSize + padding) + padding);
   }
-
 
   //////////////////////////////////////////////////////////////////////////////
   // Abstract methods -- implemented by subclasses

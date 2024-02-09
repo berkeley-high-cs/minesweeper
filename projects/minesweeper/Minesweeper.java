@@ -15,7 +15,7 @@ public class Minesweeper extends GridGame {
   private boolean firstClick = true;
 
   public Minesweeper(int rows, int columns, int numberOfBombs) {
-    super(rows, columns, 10);
+    super(rows, columns, 30, 10);
     this.numberOfBombs = numberOfBombs;
     bombs = new boolean[rows][columns];
     revealed = new boolean[rows][columns];
