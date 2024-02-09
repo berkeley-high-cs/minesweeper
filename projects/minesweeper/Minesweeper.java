@@ -1,4 +1,4 @@
-import java.awt.Color;
+import java.awt.*;
 import java.awt.Graphics2D;
 
 public class Minesweeper extends GridGame {
@@ -30,13 +30,11 @@ public class Minesweeper extends GridGame {
   }
 
   public void paintCell(int row, int column, Graphics2D g) {
-    if (lost) {
-      fillCell(g, Color.RED);
-    } else {
       if (flags[row][column]) {
-        fillCell(g, Color.RED);
-      } else if (debugBombs && isBomb(row, column)) {
-        fillCell(g, Color.BLACK);
+        //fillCell(g, Color.RED);
+        drawFlag(g);
+      } else if ((debugBombs || lost) && isBomb(row, column)) {
+        drawBomb(g);
       } else {
         if (revealed[row][column]) {
           fillCell(g, new Color(192, 192, 192));
@@ -49,7 +47,6 @@ public class Minesweeper extends GridGame {
           fillCell(g, Color.GRAY);
         }
       }
-    }
   }
 
   public void cellClicked(int row, int col, boolean rightClicked) {
@@ -94,6 +91,43 @@ public class Minesweeper extends GridGame {
   private void fillCell(Graphics2D g, Color color) {
     g.setColor(color);
     g.fillRect(0, 0, cellWidth(), cellHeight());
+  }
+
+  private void drawBomb(Graphics2D g) {
+    fillCell(g, Color.YELLOW);
+    int w = (int) (cellWidth() * 0.75);
+    int h = (int) (cellHeight() * 0.75);
+    int px = cellWidth() - w;
+    int py = cellHeight() - h;
+    g.setColor(Color.BLACK);
+    g.fillOval(px / 2, py / 2, w, h);
+  }
+
+  private void drawFlag(Graphics2D g) {
+    int w = cellWidth();
+    int h = cellHeight();
+    int left = (int)(w * 0.33);
+    int right = left + 4;
+    int top = (int)(h * 0.25);
+    int bottom = (int)(h * 0.85);
+    int pointX = (int)(w * 0.8);
+    int flagHeight = 8;
+
+    Polygon pole = new Polygon();
+    pole.addPoint(left, bottom);
+    pole.addPoint(left, top);
+    pole.addPoint(right, top);
+    pole.addPoint(right, bottom);
+
+    Polygon flag = new Polygon();
+    flag.addPoint(right, top);
+    flag.addPoint(pointX, top + flagHeight);
+    flag.addPoint(left, top + flagHeight * 2);
+
+    fillCell(g, Color.GRAY);
+    g.setColor(Color.RED);
+    g.fillPolygon(pole);
+    g.fillPolygon(flag);
   }
 
   private void placeBombs(int r, int c) {
